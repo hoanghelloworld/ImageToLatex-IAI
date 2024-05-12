@@ -84,8 +84,6 @@ class LatexOCR:
         self.args.update(**vars(arguments))
         self.args.wandb = False
         self.args.device = 'cuda' if torch.cuda.is_available() and not self.args.no_cuda else 'cpu'
-        if not os.path.exists(self.args.checkpoint):
-            download_checkpoints()
         self.model = get_model(self.args)
         self.model.load_state_dict(torch.load(self.args.checkpoint, map_location=self.args.device))
         self.model.eval()
