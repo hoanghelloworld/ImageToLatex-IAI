@@ -25,6 +25,8 @@ Nguyễn Huy Hoàng
 | BLEU score | normed edit distance | token accuracy |
 | ---------- | -------------------- | -------------- |
 | 0.86       | 0.10                 | 0.60           |
+
+
 ![Untitled](https://github.com/hoanghelloworld/ImageToLatex-IAI/assets/115699781/3d5c7508-45f4-49a2-a8a9-4127d467aaab)
 ![Untitled (1)](https://github.com/hoanghelloworld/ImageToLatex-IAI/assets/115699781/64c390c3-cd1e-42f3-ad79-e06cdcfea825)
 ![Untitled (2)](https://github.com/hoanghelloworld/ImageToLatex-IAI/assets/115699781/38d10e8d-9061-49e0-bfc5-f386f27382c6)
