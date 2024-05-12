@@ -1,4 +1,8 @@
 # ImageToLatex-IAI
+
+The goal of this project is to create a learning based system that takes an image of a math formula and returns corresponding LaTeX code.
+
+
 Team member:
 
 Nguyễn Xuân Trình
