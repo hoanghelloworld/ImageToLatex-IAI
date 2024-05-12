@@ -29,8 +29,6 @@ from timm.models.layers import StdConv2dSame  # Import class StdConv2dSame từ 
 from pix2tex.dataset.latex2png import tex2pil  
 from pix2tex.models import get_model  
 from pix2tex.utils import *
-from pix2tex.model.checkpoints.get_latest_checkpoint import download_checkpoints  
-
 # Định nghĩa hàm minmax_size
 def minmax_size(img: Image, max_dimensions: Tuple[int, int] = None, min_dimensions: Tuple[int, int] = None) -> Image:
     """Resize or pad an image to fit into given dimensions
