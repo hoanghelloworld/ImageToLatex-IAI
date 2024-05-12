@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>LaTeX Generator from Image</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Upload an Image to Convert to LaTeX</h1>
+        <form action="/predict" method="post" enctype="multipart/form-data">
+            <div class="file-drop-area" id="dropzone">
+                <span id="file-name">Drag & Drop or</span>
+                <input type="file" name="file" id="file" class="input-file" required>
+                <label for="file" class="custom-file-upload">Choose File</label>
+            </div>
+            <button type="submit" class="submit-btn">Upload and Convert</button>
+        </form>
+        {% if latex %}
+        <div class="result">
+            <h2>LaTeX Output:</h2>
+            <div class="latex">{{ latex }}</div>
+        </div>
+        {% endif %}
+        {% if error %}
+        <div class="error">
+            <p>{{ error }}</p>
+        </div>
+        {% endif %}
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <a href="https://github.com/hoanghelloworld/ImageToLatex-IAI">
+        <img src="{{ url_for('static', filename='logogithub.jpg') }}" alt="Hình ảnh con mèo" class="github-image">
+    </a>    
+</body>
+</html>

@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+body {
+    font-family: Arvo;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: Arvo;
+    background-image: url("/static/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.file-drop-area {
+    border: 2px dashed #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    text-align: center;
+}
+
+.input-file {
+    display: none;
+}
+
+.custom-file-upload {
+    color: #007bff;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.submit-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.result {
+    margin-top: 10px;
+    padding: 20px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.latex {
+    font-family: "Courier New", Courier, monospace;
+    font-weight: bold; /* Làm cho chữ đậm hơn */
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    color: #333;
+    background-color: #f5f5f5;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.error {
+    margin-top: 20px;
+    background-color: #ffcccc;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.error p {
+    margin: 0;
+    color: #ff0000;
+    font-weight: bold;
+}
+
+.github-image {
+    position: fixed;
+    top: 20px; /* Cách lề trên 20px */
+    right: 20px; /* Cách lề phải 20px */
+    transform: none; /* Không cần dịch chuyển hình ảnh nữa */
+    width: 100px; /* Điều chỉnh kích thước hình ảnh theo nhu cầu */
+    height: auto;
+    border-radius: 50%; /* Làm tròn góc của hình ảnh */
+    cursor: pointer; /* Biến con trỏ thành dấu hiệu có thể nhấp chuột */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
