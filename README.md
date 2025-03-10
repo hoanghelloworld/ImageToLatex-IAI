@@ -4,43 +4,29 @@
 
 
 **Team member**:
-
-✨Nguyễn Xuân Trình
-
-✨Nguyễn Tông Quân
-
-✨Nguyễn Viết Vũ
-
-✨Phạm Văn Trường
-
 ✨Nguyễn Huy Hoàng
-
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1-dy0dKchXZfbPEhWIwNnsNGN0e1EtS3g?usp=sharing)
-![header](https://github.com/hoanghelloworld/ImageToLatex-IAI/assets/115699781/eca687a7-a41a-4089-8a58-b0b742e086ae)
-
+✨Vũ Trung Hiếu
 ### How to run
-- Install library requirements: pip install -r requirements.txt
-- Run app.py
-
+- Install mobile app to run
 ### Performance
-| BLEU score | normed edit distance | token accuracy |
-| ---------- | -------------------- | -------------- |
-| 0.86       | 0.10                 | 0.60           |
 
-
-![Untitled](https://github.com/hoanghelloworld/ImageToLatex-IAI/assets/115699781/3d5c7508-45f4-49a2-a8a9-4127d467aaab)
-![Untitled (1)](https://github.com/hoanghelloworld/ImageToLatex-IAI/assets/115699781/64c390c3-cd1e-42f3-ad79-e06cdcfea825)
-![Untitled (2)](https://github.com/hoanghelloworld/ImageToLatex-IAI/assets/115699781/38d10e8d-9061-49e0-bfc5-f386f27382c6)
-![Untitled (3)](https://github.com/hoanghelloworld/ImageToLatex-IAI/assets/115699781/f98c23bd-2ad4-4448-bf7f-6dec2e067e39)
-![Untitled (4)](https://github.com/hoanghelloworld/ImageToLatex-IAI/assets/115699781/190f9c26-c1cc-40e4-a86b-0dd3443685bf)
+![image](https://github.com/user-attachments/assets/58988008-94ca-4ae1-9d24-c511888e8447)
 
 
 ## Dataset
-### im2latex170k
-- https://www.kaggle.com/datasets/rvente/im2latex170k
+3.4 million image-text pairs, including both handwritten mathematical expressions (200,330 examples) and printed mathematical expressions (3,237,250 examples)
+
+[- https://www.kaggle.com/datasets/rvente/im2latex170k](https://huggingface.co/datasets/hoang-quoc-trung/fusion-image-to-latex-datasets)
+
+Printed mathematical expressions: We collect from Im2latex-100k dataset [1], I2L-140K Normalized dataset and Im2latex-90k Normalized dataset [2], Im2latex-170k dataset 3, Im2latex-230k dataset 4, latexformulas dataset 5 and Im2latex dataset 6.
+
+Handwritten mathematical expressions: We collected data from the Competition on Recognition of Online Handwritten Mathematical Expressions (CROHME) dataset [7, 8, 9], Aida Calculus Math Handwriting Recognition Dataset [10] and Handwritten Mathematical Expression Convert LaTeX [11].
+
 ## References
 [1] [An Image is Worth 16x16 Words](https://arxiv.org/abs/2010.11929)
 
 [2] [Attention Is All You Need](https://arxiv.org/abs/1706.03762)
 
 [3] [Image-to-Markup Generation with Coarse-to-Fine Attention](https://arxiv.org/abs/1609.04938v2)
+
+[4] [Mobile-net-V3](https://arxiv.org/pdf/1905.02244)
