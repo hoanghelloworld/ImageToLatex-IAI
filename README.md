@@ -4,6 +4,7 @@
 
 
 **Team member**:
+
 ✨Nguyễn Huy Hoàng
 
 ✨Vũ Trung Hiếu
@@ -11,8 +12,19 @@
 - Install mobile app to run
 ### Performance
 
-![image](https://github.com/user-attachments/assets/58988008-94ca-4ae1-9d24-c511888e8447)
+## Normal Test Results
+- **BLEU**: 0.8003 ± 0.0144  
+- **NED**: 0.8826 ± 0.0099  
+- **Accuracy**: 0.5805 ± 0.0244  
+- **Samples**: 1000  
+- **Time**: 1835.31s  
 
+## Handwritten Test Results
+- **BLEU**: 0.6860 ± 0.0134  
+- **NED**: 0.8181 ± 0.0096  
+- **Accuracy**: 0.4489 ± 0.0223  
+- **Samples**: 1000  
+- **Time**: 1764.92s  
 
 ## Dataset
 3.4 million image-text pairs, including both handwritten mathematical expressions (200,330 examples) and printed mathematical expressions (3,237,250 examples)
