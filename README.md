@@ -29,7 +29,7 @@
 ## Dataset
 3.4 million image-text pairs, including both handwritten mathematical expressions (200,330 examples) and printed mathematical expressions (3,237,250 examples)
 
-![27GB data]([https://huggingface.co/datasets/hoang-quoc-trung/fusion-image-to-latex-datasets](https://huggingface.co/datasets/hoang-quoc-trung/fusion-image-to-latex-datasets))
+[27GB data](https://huggingface.co/datasets/hoang-quoc-trung/fusion-image-to-latex-datasets)
 
 Printed mathematical expressions: We collect from Im2latex-100k dataset [1], I2L-140K Normalized dataset and Im2latex-90k Normalized dataset [2], Im2latex-170k dataset 3, Im2latex-230k dataset 4, latexformulas dataset 5 and Im2latex dataset 6.
 
