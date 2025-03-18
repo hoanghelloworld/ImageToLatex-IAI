@@ -1,5 +1,5 @@
 package com.example.image2latex;
-// Add these imports
+
 import java.io.File;
 import java.io.IOException;
 import android.Manifest;
@@ -9,18 +9,23 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.image2latex.databinding.ActivityMainBinding;
 import com.example.image2latex.utils.*;
+import com.example.image2latex.chatbot.ChatActivity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private LaTeXConverter converter;
     private Thread conversionThread = null;
     private Uri cameraImageUri = null;
+    private FloatingActionButton chatFab;
     
     private static final int CAMERA_PERMISSION_CODE = 100;
     private static final int STORAGE_PERMISSION_CODE = 101;
@@ -38,6 +43,12 @@ public class MainActivity extends AppCompatActivity {
         initializeConverter();
         setupButtonListeners();
         setupTextWatcher();
+        
+        chatFab = findViewById(R.id.chat_fab);
+        chatFab.setOnClickListener(v -> {
+            Intent chatIntent = new Intent(this, ChatActivity.class);
+            startActivity(chatIntent);
+        });
     }
     
     private void initializeConverter() {
@@ -133,8 +144,8 @@ public class MainActivity extends AppCompatActivity {
         
         conversionThread = new Thread(() -> {
             try {
-                float[] tensor = ImagePreprocessor.bitmapToTensor(bitmap);
-                String result = converter.convert(tensor);
+                float[] tensorData = ImagePreprocessor.bitmapToTensor(bitmap);
+                String result = converter.convert(tensorData);
                 runOnUiThread(() -> updateUIWithResult(result));
             } catch (Exception e) {
                 runOnUiThread(() -> handleProcessingError(e));
@@ -173,6 +184,22 @@ public class MainActivity extends AppCompatActivity {
             @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         PermissionManager.handlePermissionResult(this, requestCode, grantResults);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_chat) {
+            Intent chatIntent = new Intent(this, ChatActivity.class);
+            startActivity(chatIntent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

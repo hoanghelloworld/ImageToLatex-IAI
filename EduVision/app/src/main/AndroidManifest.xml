@@ -48,7 +48,12 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-        
+        <!-- Chatbot Activity-->
+        <activity
+            android:name=".chatbot.ChatActivity"
+            android:exported="false"
+            android:label="AI Assistant"
+            android:parentActivityName=".MainActivity" />
         <!-- UCrop Activity -->
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"

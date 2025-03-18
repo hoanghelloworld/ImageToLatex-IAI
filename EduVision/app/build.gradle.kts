@@ -79,6 +79,7 @@ dependencies {
     implementation(libs.appcompat)
     implementation(libs.material)
     testImplementation(libs.junit)
+    implementation("com.squareup.okhttp3:okhttp:4.9.3")
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation("org.pytorch:pytorch_android:2.1.0")
