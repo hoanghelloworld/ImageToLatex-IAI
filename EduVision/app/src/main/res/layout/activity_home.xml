@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/purple_500"
-    tools:context=".MainActivity">
+    tools:context=".HomeActivity">
 
     <TextView
         android:id="@+id/appTitle"
@@ -92,12 +92,12 @@
                 app:layout_constraintTop_toBottomOf="@+id/conversionTitle" />
 
             <Button
-                android:id="@+id/btnConvertImage"
+                android:id="@+id/openConverterButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="@color/purple_500"
-                android:text="Start Converting"
+                android:text="Open Converter"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -129,7 +129,7 @@
                 android:id="@+id/chatIcon"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
-                android:src="@drawable/chat_icon"
+                android:src="@android:drawable/ic_dialog_email"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -162,7 +162,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/chatTitle" />
 
             <Button
-                android:id="@+id/btnStartChat"
+                android:id="@+id/openChatButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -176,4 +176,4 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout> 

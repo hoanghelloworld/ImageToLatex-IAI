@@ -7,8 +7,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.widget.Toast;
-import androidx.annotation.NonNull;
-import com.example.image2latex.databinding.ActivityMainBinding;
+
+import androidx.viewbinding.ViewBinding;
+import com.example.image2latex.databinding.ActivityConversionBinding;
 import com.yalantis.ucrop.UCrop;
 import com.yalantis.ucrop.model.AspectRatio;
 import java.util.function.Consumer;
@@ -24,7 +25,7 @@ public class ImageHandler {
     private static final int CAMERA_REQUEST_CODE = 102;
 
     public static void handleActivityResult(Activity activity, int requestCode, int resultCode, 
-            Intent data, ActivityMainBinding binding, Uri cameraImageUri, 
+            Intent data, ViewBinding binding, Uri cameraImageUri, 
             Consumer<Bitmap> processImage) {
         if (resultCode != Activity.RESULT_OK) {
             return;

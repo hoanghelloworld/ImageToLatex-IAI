@@ -30,6 +30,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Image2Latex">
         
+        <!-- Home Activity - Main Launcher -->
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -38,6 +39,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <!-- Conversion Activity -->
+        <activity
+            android:name=".ConversionActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

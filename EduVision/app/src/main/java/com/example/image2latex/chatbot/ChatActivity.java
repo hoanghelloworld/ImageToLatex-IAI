@@ -17,6 +17,12 @@ import com.example.image2latex.R;
 
 import java.util.List;
 
+// Correct imports for chatbot package classes
+import com.example.image2latex.chatbot.ChatMessage;
+import com.example.image2latex.chatbot.ChatAdapter;
+import com.example.image2latex.chatbot.ChatbotHelper;
+import com.example.image2latex.chatbot.ChatbotHelperSingleton;
+
 public class ChatActivity extends AppCompatActivity {
     
     private RecyclerView recyclerView;
@@ -145,4 +151,4 @@ public class ChatActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-}
+} 
