@@ -7,6 +7,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import com.example.image2latex.chatbot.ChatActivity;
+import com.example.image2latex.documentwriter.DocumentListActivity;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -22,7 +23,7 @@ public class HomeActivity extends AppCompatActivity {
         View.OnClickListener openConverterListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, MainActivity.class);
+                Intent intent = new Intent(HomeActivity.this, ConversionActivity.class);
                 startActivity(intent);
             }
         };
@@ -44,5 +45,20 @@ public class HomeActivity extends AppCompatActivity {
         
         chatCard.setOnClickListener(openChatListener);
         openChatButton.setOnClickListener(openChatListener);
+        
+        // Set up document writer card click
+        CardView documentCard = findViewById(R.id.documentCard);
+        Button openDocumentButton = findViewById(R.id.openDocumentButton);
+        
+        View.OnClickListener openDocumentListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, DocumentListActivity.class);
+                startActivity(intent);
+            }
+        };
+        
+        documentCard.setOnClickListener(openDocumentListener);
+        openDocumentButton.setOnClickListener(openDocumentListener);
     }
 } 

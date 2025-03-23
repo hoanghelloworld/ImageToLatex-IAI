@@ -32,7 +32,7 @@
         
         <!-- Home Activity - Main Launcher -->
         <activity
-            android:name=".MainActivity"
+            android:name=".HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -40,11 +40,33 @@
             </intent-filter>
         </activity>
         
+        <!-- Main Activity (Old Converter) -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="false"
+            android:parentActivityName=".HomeActivity" />
+        
         <!-- Conversion Activity -->
         <activity
             android:name=".ConversionActivity"
             android:exported="false"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".HomeActivity" />
+
+        <!-- Document List Activity -->
+        <activity
+            android:name=".documentwriter.DocumentListActivity"
+            android:exported="false"
+            android:label="My Documents"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:parentActivityName=".HomeActivity" />
+            
+        <!-- Document Writing Activity -->
+        <activity
+            android:name=".documentwriter.DocumentWritingActivity"
+            android:exported="false"
+            android:label="Document Editor"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:parentActivityName=".documentwriter.DocumentListActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -55,12 +77,14 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+        
         <!-- Chatbot Activity-->
         <activity
             android:name=".chatbot.ChatActivity"
             android:exported="false"
             android:label="AI Assistant"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".HomeActivity" />
+            
         <!-- UCrop Activity -->
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
