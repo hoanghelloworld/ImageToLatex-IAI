@@ -2,6 +2,7 @@ package com.example.image2latex.documentwriter;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
@@ -38,7 +39,7 @@ public class DocumentWritingActivity extends AppCompatActivity {
     private static final String TAG = "DocumentWritingActivity";
     private EditText documentEditor;
     private TextView latexPreview;
-    private Button btnFontSmall, btnFontMedium, btnFontLarge, btnInsertLatex, btnSave;
+    private Button btnFontSmall, btnFontMedium, btnFontLarge, btnInsertLatex, btnSave, btnRender;
     private Toolbar toolbar;
     private DocumentManager documentManager;
     private String documentId;
@@ -87,6 +88,7 @@ public class DocumentWritingActivity extends AppCompatActivity {
             btnFontLarge = findViewById(R.id.btn_font_large);
             btnInsertLatex = findViewById(R.id.btn_insert_latex);
             btnSave = findViewById(R.id.btn_save);
+            btnRender = findViewById(R.id.btn_render);
             toolbar = findViewById(R.id.toolbar);
             
             // Set up toolbar only if not null
@@ -111,6 +113,7 @@ public class DocumentWritingActivity extends AppCompatActivity {
             if (btnFontLarge != null) btnFontLarge.setOnClickListener(v -> setFontSize(LARGE_TEXT_SIZE));
             if (btnInsertLatex != null) btnInsertLatex.setOnClickListener(v -> showLatexInputDialog());
             if (btnSave != null) btnSave.setOnClickListener(v -> saveDocument());
+            if (btnRender != null) btnRender.setOnClickListener(v -> renderDocument());
             
             // Set up text watcher to detect LaTeX formulas
             Log.d(TAG, "Setting up text watcher");
@@ -196,6 +199,25 @@ public class DocumentWritingActivity extends AppCompatActivity {
         });
         
         builder.show();
+    }
+    
+    private void renderDocument() {
+        try {
+            // Save the document first
+            saveDocument();
+            
+            // Get the content
+            String content = documentEditor.getText().toString();
+            
+            // Start the HTML renderer activity
+            Intent intent = new Intent(this, HtmlRendererActivity.class);
+            intent.putExtra("document_content", content);
+            intent.putExtra("document_id", currentDocument.getId());
+            startActivity(intent);
+        } catch (Exception e) {
+            Log.e(TAG, "Error rendering document", e);
+            Toast.makeText(this, "Error rendering document: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
     
     private void saveDocument() {
