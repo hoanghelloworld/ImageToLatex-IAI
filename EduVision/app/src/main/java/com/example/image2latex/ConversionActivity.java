@@ -22,7 +22,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 // Import utility classes from the project
 import com.example.image2latex.utils.UIHelper;
 import com.example.image2latex.utils.PermissionManager;
-import com.example.image2latex.ImagePreprocessor;
 import com.example.image2latex.utils.ImageHandler;
 import com.example.image2latex.LaTeXConverter;
 
@@ -64,14 +63,14 @@ public class ConversionActivity extends AppCompatActivity {
     }
     
     private void initializeConverter() {
-        new Thread(() -> {
-            try {
-                converter = new LaTeXConverter(this);
-                runOnUiThread(() -> UIHelper.enableButtons(binding));
-            } catch (Exception e) {
-                handleConverterInitError(e);
-            }
-        }).start();
+        try {
+            // Initialize converter synchronously - no need for async initialization since
+            // we're not loading large models anymore
+            converter = new LaTeXConverter(this);
+            UIHelper.enableButtons(binding);
+        } catch (Exception e) {
+            handleConverterInitError(e);
+        }
     }
 
     private void setupButtonListeners() {
@@ -156,8 +155,8 @@ public class ConversionActivity extends AppCompatActivity {
         
         conversionThread = new Thread(() -> {
             try {
-                float[] tensorData = ImagePreprocessor.bitmapToTensor(bitmap);
-                String result = converter.convert(tensorData);
+                // Pass the bitmap directly to the converter instead of preprocessing it
+                String result = converter.convert(bitmap);
                 runOnUiThread(() -> updateUIWithResult(result));
             } catch (Exception e) {
                 runOnUiThread(() -> handleProcessingError(e));
