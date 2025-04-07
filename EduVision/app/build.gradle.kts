@@ -14,6 +14,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        // Add permission for writing to external storage
+        manifestPlaceholders["appAuthRedirectScheme"] = "com.example.image2latex"
     }
 
     sourceSets {
@@ -43,8 +46,11 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 
-    packagingOptions {
-        pickFirst("lib/**/libc++_shared.so")
+    // Fix deprecated packaging calls
+    packaging {
+        jniLibs {
+            pickFirsts.add("lib/**/libc++_shared.so")
+        }
     }
 }
 
@@ -93,4 +99,11 @@ dependencies {
     implementation("com.github.yalantis:ucrop:2.2.8") {
         exclude(group = "com.android.support")
     }
+    
+    // Add HTML export support
+    implementation("androidx.webkit:webkit:1.7.0")
+    
+    // Improved UI components
+    implementation("androidx.cardview:cardview:1.0.0")
+    implementation("com.google.android.material:material:1.11.0")
 }

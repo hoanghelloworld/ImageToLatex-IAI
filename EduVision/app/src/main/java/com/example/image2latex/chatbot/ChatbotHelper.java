@@ -118,15 +118,15 @@ public class ChatbotHelper {
             // Create contents array with conversation history
             JSONArray contents = new JSONArray();
             
-            // Include instructions as first user message if this is a new conversation
-            if (conversationHistory.size() <= 1) {
+            // Include specific instructions based on the type of request
+            if (newMessage.contains("Translate to ")) {
                 JSONObject instructionContent = new JSONObject();
                 JSONArray instructionParts = new JSONArray();
                 JSONObject instructionPart = new JSONObject();
                 
-                instructionPart.put("text", "You are a helpful AI assistant specialized in LaTeX and mathematical equations. " +
-                                    "Your answers should be clear and focused on helping users convert mathematical expressions to LaTeX. " +
-                                    "For complex equations, provide step-by-step explanations when needed.");
+                instructionPart.put("text", "You are a translation assistant. When translating text, respond ONLY with the " +
+                        "translated content without explanations or comments. Make the translation sound natural in the target language. " +
+                        "If the source language isn't specified, detect it automatically and translate to the requested language.");
                 instructionParts.put(instructionPart);
                 instructionContent.put("role", "user");
                 instructionContent.put("parts", instructionParts);
@@ -136,7 +136,98 @@ public class ChatbotHelper {
                 JSONObject ackContent = new JSONObject();
                 JSONArray ackParts = new JSONArray();
                 JSONObject ackPart = new JSONObject();
-                ackPart.put("text", "I'll help you with LaTeX and mathematical equations. What can I assist you with today?");
+                ackPart.put("text", "I understand. I'll provide only the translated text without explanations.");
+                ackParts.put(ackPart);
+                ackContent.put("role", "model");
+                ackContent.put("parts", ackParts);
+                contents.put(ackContent);
+            } else if (newMessage.contains("Improve my writing") || newMessage.contains("Fix spelling") || 
+                newMessage.contains("Make this shorter") || newMessage.contains("Make this longer") || 
+                newMessage.contains("Change the tone")) {
+                
+                JSONObject instructionContent = new JSONObject();
+                JSONArray instructionParts = new JSONArray();
+                JSONObject instructionPart = new JSONObject();
+                
+                instructionPart.put("text", "You are an AI writing assistant helping with document editing. " +
+                                 "When you receive text to improve, fix, translate, explain, shorten, lengthen, or change tone, " +
+                                 "focus ONLY on the specific request. Return ONLY the modified text without additional explanations, " +
+                                 "comments, or formatting. Your response will be directly inserted into the document.");
+                instructionParts.put(instructionPart);
+                instructionContent.put("role", "user");
+                instructionContent.put("parts", instructionParts);
+                contents.put(instructionContent);
+                
+                // Add model's acknowledgment
+                JSONObject ackContent = new JSONObject();
+                JSONArray ackParts = new JSONArray();
+                JSONObject ackPart = new JSONObject();
+                ackPart.put("text", "I understand. I'll process your text according to your request and return only the modified text.");
+                ackParts.put(ackPart);
+                ackContent.put("role", "model");
+                ackContent.put("parts", ackParts);
+                contents.put(ackContent);
+            } else if (newMessage.contains("Explain this")) {
+                JSONObject instructionContent = new JSONObject();
+                JSONArray instructionParts = new JSONArray();
+                JSONObject instructionPart = new JSONObject();
+                
+                instructionPart.put("text", "You are an AI educational assistant. When asked to explain text, provide a clear, " +
+                                 "concise explanation that helps the user understand the content better. Break down complex concepts " +
+                                 "and explain any technical terms. For mathematical expressions, explain the meaning and purpose.");
+                instructionParts.put(instructionPart);
+                instructionContent.put("role", "user");
+                instructionContent.put("parts", instructionParts);
+                contents.put(instructionContent);
+                
+                JSONObject ackContent = new JSONObject();
+                JSONArray ackParts = new JSONArray();
+                JSONObject ackPart = new JSONObject();
+                ackPart.put("text", "I'll provide a clear and helpful explanation of the text.");
+                ackParts.put(ackPart);
+                ackContent.put("role", "model");
+                ackContent.put("parts", ackParts);
+                contents.put(ackContent);
+            } else if (newMessage.contains("Reference Text:")) {
+                // Handle the case where there's a custom query with reference text
+                JSONObject instructionContent = new JSONObject();
+                JSONArray instructionParts = new JSONArray();
+                JSONObject instructionPart = new JSONObject();
+                
+                instructionPart.put("text", "You are an AI assistant helping with a document. The user will ask a question " +
+                                 "and provide reference text from their document. When answering, focus on addressing the question " +
+                                 "in relation to the provided reference text. Give a helpful, clear response.");
+                instructionParts.put(instructionPart);
+                instructionContent.put("role", "user");
+                instructionContent.put("parts", instructionParts);
+                contents.put(instructionContent);
+                
+                JSONObject ackContent = new JSONObject();
+                JSONArray ackParts = new JSONArray();
+                JSONObject ackPart = new JSONObject();
+                ackPart.put("text", "I'll address your question in relation to the provided reference text.");
+                ackParts.put(ackPart);
+                ackContent.put("role", "model");
+                ackContent.put("parts", ackParts);
+                contents.put(ackContent);
+            } else if (conversationHistory.size() <= 1) {
+                // Standard chat instruction for other cases
+                JSONObject instructionContent = new JSONObject();
+                JSONArray instructionParts = new JSONArray();
+                JSONObject instructionPart = new JSONObject();
+                
+                instructionPart.put("text", "You are a helpful AI assistant specialized in LaTeX and mathematical equations. " +
+                                    "Your answers should be clear and focused on helping users with document writing and mathematical expressions.");
+                instructionParts.put(instructionPart);
+                instructionContent.put("role", "user");
+                instructionContent.put("parts", instructionParts);
+                contents.put(instructionContent);
+                
+                // Add model's acknowledgment
+                JSONObject ackContent = new JSONObject();
+                JSONArray ackParts = new JSONArray();
+                JSONObject ackPart = new JSONObject();
+                ackPart.put("text", "I'll help you with your documents and mathematical expressions. What can I assist you with today?");
                 ackParts.put(ackPart);
                 ackContent.put("role", "model");
                 ackContent.put("parts", ackParts);
@@ -144,7 +235,7 @@ public class ChatbotHelper {
             }
             
             // Add previous conversation for context (limited to avoid token limits)
-            int historyStartIdx = Math.max(0, conversationHistory.size() - 10);
+            int historyStartIdx = Math.max(0, conversationHistory.size() - 6);
             for (int i = historyStartIdx; i < conversationHistory.size(); i++) {
                 ChatMessage msg = conversationHistory.get(i);
                 JSONObject msgContent = new JSONObject();
@@ -159,8 +250,17 @@ public class ChatbotHelper {
             }
             
             json.put("contents", contents);
+            
+            // Adjust temperature based on the type of request
+            float temperature = 0.4f;
+            if (newMessage.contains("Improve my writing") || newMessage.contains("Make this longer")) {
+                temperature = 0.7f; // More creative for improving writing
+            } else if (newMessage.contains("Fix spelling") || newMessage.contains("Translate to")) {
+                temperature = 0.2f; // More precise for corrections and translations
+            }
+            
             json.put("generationConfig", new JSONObject()
-                    .put("temperature", 0.4)
+                    .put("temperature", temperature)
                     .put("maxOutputTokens", 2048));
             
             return json.toString();

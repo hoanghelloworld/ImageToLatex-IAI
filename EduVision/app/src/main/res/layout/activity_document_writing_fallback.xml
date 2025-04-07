@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android/tools"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".documentwriter.DocumentWritingActivity">
@@ -30,9 +30,9 @@
             android:orientation="horizontal"
             android:padding="8dp">
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/btn_font_small"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
+                style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
@@ -40,9 +40,9 @@
                 android:text="S"
                 android:textSize="14sp" />
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/btn_font_medium"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
+                style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
@@ -50,9 +50,9 @@
                 android:text="M"
                 android:textSize="16sp" />
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/btn_font_large"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
+                style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
@@ -60,17 +60,17 @@
                 android:text="L"
                 android:textSize="18sp" />
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/btn_insert_latex"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
+                style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="Insert LaTeX" />
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/btn_save"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
+                style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -98,9 +98,9 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <com.google.android.material.button.MaterialButton
+                <Button
                     android:id="@+id/btn_bold"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
@@ -108,9 +108,9 @@
                     android:text="B"
                     android:textStyle="bold" />
 
-                <com.google.android.material.button.MaterialButton
+                <Button
                     android:id="@+id/btn_italic"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
@@ -118,34 +118,34 @@
                     android:text="I"
                     android:textStyle="italic" />
 
-                <com.google.android.material.button.MaterialButton
+                <Button
                     android:id="@+id/btn_underline"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
                     android:minWidth="48dp"
                     android:text="U" />
 
-                <com.google.android.material.button.MaterialButton
+                <Button
                     android:id="@+id/btn_text_color"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
                     android:text="Color" />
 
-                <com.google.android.material.button.MaterialButton
+                <Button
                     android:id="@+id/btn_turn_into"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
                     android:text="Turn Into" />
 
-                <com.google.android.material.button.MaterialButton
+                <Button
                     android:id="@+id/btn_ask_ai"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Ask AI" />
@@ -224,7 +224,7 @@
 
                 <Button
                     android:id="@+id/ai_preview_insert"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    style="@style/Widget.AppCompat.Button.Borderless.Colored"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
@@ -232,7 +232,7 @@
 
                 <Button
                     android:id="@+id/ai_preview_close"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Close" />
