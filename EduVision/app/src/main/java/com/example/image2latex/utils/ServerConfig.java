@@ -14,10 +14,12 @@ public class ServerConfig {
     private static final String DEFAULT_SERVER_URL = "http://127.0.0.1:8088";
     private static final String DEFAULT_ENDPOINT = "/image_to_latex";
     private static final String DEFAULT_RENDER_ENDPOINT = "/render_latex";
+    private static final String DEFAULT_CHATBOT_ENDPOINT = "/chatbot";
     
     private String serverUrl;
     private String endpoint;
     private String renderEndpoint;
+    private String chatbotEndpoint;
     
     private static ServerConfig instance;
     
@@ -41,12 +43,14 @@ public class ServerConfig {
             serverUrl = properties.getProperty("server.url", DEFAULT_SERVER_URL);
             endpoint = properties.getProperty("server.endpoint", DEFAULT_ENDPOINT);
             renderEndpoint = properties.getProperty("server.render_endpoint", DEFAULT_RENDER_ENDPOINT);
+            chatbotEndpoint = properties.getProperty("server.chatbot_endpoint", DEFAULT_CHATBOT_ENDPOINT);
             Log.d(TAG, "Loaded server configuration: " + serverUrl + endpoint);
         } catch (IOException e) {
             Log.w(TAG, "Could not load server.properties file, using defaults", e);
             serverUrl = DEFAULT_SERVER_URL;
             endpoint = DEFAULT_ENDPOINT;
             renderEndpoint = DEFAULT_RENDER_ENDPOINT;
+            chatbotEndpoint = DEFAULT_CHATBOT_ENDPOINT;
         }
     }
     
@@ -56,6 +60,10 @@ public class ServerConfig {
     
     public String getRenderApiUrl() {
         return serverUrl + renderEndpoint;
+    }
+    
+    public String getChatbotApiUrl() {
+        return serverUrl + chatbotEndpoint;
     }
     
     public String getServerUrl() {
@@ -68,5 +76,9 @@ public class ServerConfig {
     
     public String getRenderEndpoint() {
         return renderEndpoint;
+    }
+    
+    public String getChatbotEndpoint() {
+        return chatbotEndpoint;
     }
 } 

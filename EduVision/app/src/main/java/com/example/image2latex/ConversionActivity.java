@@ -16,8 +16,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.image2latex.databinding.ActivityConversionBinding;
-import com.example.image2latex.chatbot.ChatActivity;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 // Import utility classes from the project
 import com.example.image2latex.utils.UIHelper;
@@ -30,7 +28,6 @@ public class ConversionActivity extends AppCompatActivity {
     private LaTeXConverter converter;
     private Thread conversionThread = null;
     private Uri cameraImageUri = null;
-    private FloatingActionButton chatFab;
     
     private static final int CAMERA_PERMISSION_CODE = 100;
     private static final int STORAGE_PERMISSION_CODE = 101;
@@ -54,12 +51,6 @@ public class ConversionActivity extends AppCompatActivity {
         initializeConverter();
         setupButtonListeners();
         setupTextWatcher();
-        
-        chatFab = binding.chatFab;
-        chatFab.setOnClickListener(v -> {
-            Intent chatIntent = new Intent(this, ChatActivity.class);
-            startActivity(chatIntent);
-        });
     }
     
     private void initializeConverter() {
@@ -207,10 +198,6 @@ public class ConversionActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             finish();
-            return true;
-        } else if (item.getItemId() == R.id.menu_chat) {
-            Intent chatIntent = new Intent(this, ChatActivity.class);
-            startActivity(chatIntent);
             return true;
         }
         return super.onOptionsItemSelected(item);

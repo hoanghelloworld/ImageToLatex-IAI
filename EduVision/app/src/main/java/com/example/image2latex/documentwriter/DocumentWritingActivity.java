@@ -206,7 +206,7 @@ public class DocumentWritingActivity extends AppCompatActivity {
             if (btnAskAI != null) btnAskAI.setOnClickListener(v -> showAskAIMenu());
 
             // Initialize AI helper
-            aiHelper = ChatbotHelperSingleton.getInstance();
+            aiHelper = ChatbotHelperSingleton.getInstance(this);
 
             // Set up text selection listener
             documentEditor.setOnClickListener(v -> checkTextSelection());
@@ -870,17 +870,10 @@ public class DocumentWritingActivity extends AppCompatActivity {
         // Find LaTeX patterns in the text
         Matcher matcher = LATEX_PATTERN.matcher(text);
         if (matcher.find()) {
-            latexPreview.setVisibility(View.VISIBLE);
-            String latexContent = matcher.group(1) != null ? matcher.group(1) : matcher.group(2);
-            showLatexPreview(latexContent);
+            latexPreview.setVisibility(View.GONE);
         } else {
             latexPreview.setVisibility(View.GONE);
         }
-    }
-
-    private void showLatexPreview(String latexContent) {
-        // Display LaTeX preview at the bottom
-        latexPreview.setText("LaTeX: " + latexContent);
     }
 
     private void showLatexInputDialog() {

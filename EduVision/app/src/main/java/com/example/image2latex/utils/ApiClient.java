@@ -22,7 +22,7 @@ public class ApiClient {
     private static final String TAG = "ApiClient";
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     private static final MediaType FORM = MediaType.parse("application/x-www-form-urlencoded; charset=utf-8");
-    private static final int TIMEOUT_SECONDS = 30;
+    private static final int TIMEOUT_SECONDS = 90;
     
     private final OkHttpClient client;
     private final ServerConfig serverConfig;
@@ -88,17 +88,22 @@ public class ApiClient {
     /**
      * Send LaTeX content to the server for HTML rendering
      * @param latexContent The LaTeX content to render
-     * @return The HTML content as string
+     * @return A map containing HTML and CSS content
      * @throws IOException If any error occurs during the request
      * @throws JSONException If any error occurs while creating JSON
      */
-    public String renderLatexToHtml(String latexContent) throws IOException, JSONException {
+    public JSONObject renderLatexToHtml(String latexContent) throws IOException, JSONException {
+        // Log the complete content being processed
+        Log.d(TAG, "Processing full LaTeX document: " + 
+              (latexContent.length() > 100 ? latexContent.substring(0, 100) + "..." : latexContent));
+        
         // Create JSON request body
         JSONObject requestBody = new JSONObject();
+        // Ensure we're sending the complete document without truncation
         requestBody.put("latex", latexContent);
         
         String jsonStr = requestBody.toString();
-        Log.d(TAG, "Sending JSON: " + jsonStr);
+        Log.d(TAG, "Sending JSON length: " + jsonStr.length());
         
         // Create request with proper headers
         Request request = new Request.Builder()
@@ -117,7 +122,42 @@ public class ApiClient {
                 throw new IOException("Unexpected response code: " + response.code() + " - " + errorBody);
             }
             
-            return response.body().string();
+            String responseBody = response.body().string();
+            JSONObject jsonResponse = new JSONObject(responseBody);
+            
+            // Check for error response
+            if (jsonResponse.has("error")) {
+                throw new IOException("Server error: " + jsonResponse.getString("error"));
+            }
+            
+            // Return the JSON object containing html and css
+            return jsonResponse;
+        }
+    }
+    
+    /**
+     * Fetch an image from the server
+     * @param imageName Name of the image file to fetch
+     * @return Byte array containing the image data
+     * @throws IOException If any error occurs during the request
+     */
+    public byte[] fetchImage(String imageName) throws IOException {
+        // Create request
+        String imageUrl = serverConfig.getServerUrl() + "/" + imageName;
+        Request request = new Request.Builder()
+                .url(imageUrl)
+                .get()
+                .build();
+        
+        Log.d(TAG, "Fetching image from: " + imageUrl);
+        
+        // Execute request
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) {
+                throw new IOException("Unexpected response code: " + response);
+            }
+            
+            return response.body().bytes();
         }
     }
 }

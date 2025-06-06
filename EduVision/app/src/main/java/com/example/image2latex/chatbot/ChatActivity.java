@@ -62,7 +62,7 @@ public class ChatActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         
         // Get the chatbot helper instance
-        chatbotHelper = ChatbotHelperSingleton.getInstance();
+        chatbotHelper = ChatbotHelperSingleton.getInstance(this);
         
         // Load chat history
         loadChatHistory();
