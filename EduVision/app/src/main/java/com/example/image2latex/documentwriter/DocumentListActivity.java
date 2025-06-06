@@ -2,13 +2,17 @@ package com.example.image2latex.documentwriter;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,6 +22,7 @@ import com.example.image2latex.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class DocumentListActivity extends AppCompatActivity implements DocumentAdapter.DocumentClickListener {
@@ -147,8 +152,7 @@ public class DocumentListActivity extends AppCompatActivity implements DocumentA
             int itemId = item.getItemId();
             if (itemId == R.id.action_rename) {
                 // Rename document
-                // This would normally show a dialog to rename
-                Toast.makeText(this, "Rename feature coming soon", Toast.LENGTH_SHORT).show();
+                showRenameDialog(document);
                 return true;
             } else if (itemId == R.id.action_delete) {
                 // Delete document
@@ -158,6 +162,50 @@ public class DocumentListActivity extends AppCompatActivity implements DocumentA
             return false;
         });
         popup.show();
+    }
+
+    private void showRenameDialog(Document document) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Rename Document");
+        
+        // Create input field
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        input.setText(document.getTitle());
+        input.selectAll(); // Select all text for easy editing
+        
+        // Set padding for better appearance
+        input.setPadding(50, 40, 50, 40);
+        builder.setView(input);
+        
+        builder.setPositiveButton("Rename", (dialog, which) -> {
+            String newTitle = input.getText().toString().trim();
+            if (!newTitle.isEmpty()) {
+                if (documentManager.renameDocument(document.getId(), newTitle)) {
+                    // Update the document object
+                    document.setTitle(newTitle);
+                    document.setModifiedDate(new Date());
+                    
+                    // Refresh the list
+                    loadDocuments();
+                    
+                    Toast.makeText(this, "Document renamed successfully", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Failed to rename document", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(this, "Please enter a valid name", Toast.LENGTH_SHORT).show();
+            }
+        });
+        
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+        
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        
+        // Focus on input and show keyboard
+        input.requestFocus();
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
     }
 
     private void deleteDocument(Document document) {

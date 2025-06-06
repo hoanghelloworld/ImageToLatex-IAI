@@ -184,6 +184,33 @@ public class DocumentManager {
     }
     
     /**
+     * Rename a document
+     */
+    public boolean renameDocument(String documentId, String newTitle) {
+        try {
+            // Load the document first
+            Document document = loadDocument(documentId);
+            if (document == null) {
+                Log.e(TAG, "Document not found for rename: " + documentId);
+                return false;
+            }
+            
+            // Update the title and modified date
+            document.setTitle(newTitle);
+            document.setModifiedDate(new Date());
+            
+            // Save the updated metadata
+            saveMetadata(document);
+            
+            Log.d(TAG, "Document renamed successfully: " + documentId + " -> " + newTitle);
+            return true;
+        } catch (Exception e) {
+            Log.e(TAG, "Error renaming document", e);
+            return false;
+        }
+    }
+    
+    /**
      * Save document metadata
      */
     private void saveMetadata(Document document) throws IOException {
