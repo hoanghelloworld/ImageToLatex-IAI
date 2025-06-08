@@ -1,45 +1,98 @@
 # ImageToLatex-IAI
 
-*The goal of this project is to create a learning based system that takes an image of a math formula and returns corresponding LaTeX code.*
+## Introduction
+ImageToLatex-IAI is an Android application that converts mathematical formulas from images into LaTeX code. The project combines computer vision and machine learning to accurately recognize both handwritten and printed mathematical expressions, making it easier for students, educators, and researchers to digitize mathematical content.
+
+### Key Features
+- Convert images of mathematical formulas to LaTeX code
+- Support for both handwritten and printed mathematical expressions
+- Real-time LaTeX preview
+- Built-in chat assistant for LaTeX help
+- Modern and user-friendly interface
+
+### Team Members
+✨ Nguyễn Huy Hoàng - 22022584
+✨ Vũ Trung Hiếu - 22022515
+
+## Setup Tutorial
+
+### 1. Server Setup
+1. Clone the LaTeX Assistant Server repository:
+   ```bash
+   git clone https://github.com/hawkin-dono/Latex_Assistant_Server.git
+   cd Latex_Assistant_Server
+   ```
+
+2. Install server dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. Install LaTeX dependencies:
+   - For Unix systems:
+     ```bash
+     make
+     make install
+     ```
+   - For Windows:
+     - Install TeX Live or MiKTeX distribution
+     - Ensure tex4ht system is included
+
+4. Configure environment:
+   - Create a `.env` file in the server root directory
+   - Add your Together AI credentials:
+     ```
+     TOGETHER_API_KEY=your_api_key_here
+     TOGETHER_MODEL_NAME=your_model_name_here
+     ```
+
+5. Start the server:
+   ```bash
+   uvicorn api:app --reload
+   ```
+
+### 2. Mobile App Setup
+
+1. Get your server's IP address:
+   - On Windows: Run `ipconfig` in command prompt
+   - On Linux/Mac: Run `ifconfig` in terminal
+   - Note down the IPv4 address (e.g., 192.168.1.6)
+
+2. Configure server properties:
+   - Open `EduVision/app/src/main/assets/server.properties`
+   - Update the server URL with your IP address:
+     ```properties
+     server.url=http://192.168.1.6:8088
+     server.endpoint=/image_to_latex
+     server.render_endpoint=/render_latex
+     server.chatbot_endpoint=/chatbot
+     ```
+
+3. Run the Android app:
+   - Open the project in Android Studio
+   - Build and run the application on your device or emulator
 
 
-**Team member**:
+## License
 
-✨Nguyễn Huy Hoàng
+MIT License
 
-✨Vũ Trung Hiếu
-### How to run
-- Install mobile app to run
-### Performance
+Copyright (c) 2024 ImageToLatex-IAI
 
-## Normal Test Results
-- **BLEU**: 0.8003 ± 0.0144  
-- **NED**: 0.8826 ± 0.0099  
-- **Accuracy**: 0.5805 ± 0.0244  
-- **Samples**: 1000  
-- **Time**: 1835.31s  
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-## Handwritten Test Results
-- **BLEU**: 0.6860 ± 0.0134  
-- **NED**: 0.8181 ± 0.0096  
-- **Accuracy**: 0.4489 ± 0.0223  
-- **Samples**: 1000  
-- **Time**: 1764.92s  
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-## Dataset
-3.4 million image-text pairs, including both handwritten mathematical expressions (200,330 examples) and printed mathematical expressions (3,237,250 examples)
-
-[27GB data](https://huggingface.co/datasets/hoang-quoc-trung/fusion-image-to-latex-datasets)
-
-Printed mathematical expressions: We collect from Im2latex-100k dataset [1], I2L-140K Normalized dataset and Im2latex-90k Normalized dataset [2], Im2latex-170k dataset 3, Im2latex-230k dataset 4, latexformulas dataset 5 and Im2latex dataset 6.
-
-Handwritten mathematical expressions: We collected data from the Competition on Recognition of Online Handwritten Mathematical Expressions (CROHME) dataset [7, 8, 9], Aida Calculus Math Handwriting Recognition Dataset [10] and Handwritten Mathematical Expression Convert LaTeX [11].
-
-## References
-[1] [An Image is Worth 16x16 Words](https://arxiv.org/abs/2010.11929)
-
-[2] [Attention Is All You Need](https://arxiv.org/abs/1706.03762)
-
-[3] [Image-to-Markup Generation with Coarse-to-Fine Attention](https://arxiv.org/abs/1609.04938v2)
-
-[4] [Mobile-net-V3](https://arxiv.org/pdf/1905.02244)
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
