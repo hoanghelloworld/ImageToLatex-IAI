@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -27,6 +29,7 @@ public class ChatActivity extends AppCompatActivity {
     
     private RecyclerView recyclerView;
     private EditText messageInput;
+    private ImageView backButton;
     private ImageButton sendButton;
     private ProgressBar progressBar;
     private ChatAdapter adapter;
@@ -37,43 +40,53 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         
-        // Set up ActionBar
+        // Ẩn thanh ActionBar vì chúng ta đã có toolbar tùy chỉnh
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("LaTeX Assistant");
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().hide();
         }
         
-        // Initialize UI elements
+        // Khởi tạo các thành phần giao diện
         recyclerView = findViewById(R.id.recycler_chat);
         messageInput = findViewById(R.id.edit_message);
+        backButton = findViewById(R.id.back_button);
         sendButton = findViewById(R.id.button_send);
         progressBar = findViewById(R.id.progress_bar);
         
-        // Set background and text colors
-        View rootView = findViewById(android.R.id.content);
-        rootView.setBackgroundColor(getResources().getColor(android.R.color.white));
-        messageInput.setTextColor(getResources().getColor(android.R.color.black));
-        messageInput.setHintTextColor(getResources().getColor(android.R.color.darker_gray));
+        // Thiết lập màu nền và màu chữ
+        messageInput.setHint("Nhập tin nhắn của bạn...");
         
-        // Set up RecyclerView
+        // Thiết lập RecyclerView
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
+        
+        // Tùy chỉnh adapter để sử dụng các bubble chat mới
         adapter = new ChatAdapter();
+        adapter.setUserMessageBackground(R.drawable.chat_user_bubble);
+        adapter.setBotMessageBackground(R.drawable.chat_bot_bubble);
         recyclerView.setAdapter(adapter);
         
-        // Get the chatbot helper instance
+        // Khởi tạo chatbot helper
         chatbotHelper = ChatbotHelperSingleton.getInstance(this);
         
-        // Load chat history
+        // Tải lịch sử chat
         loadChatHistory();
         
-        // Add welcome message if there's no history
+        // Thêm tin nhắn chào mừng nếu không có lịch sử
         if (adapter.getItemCount() == 0) {
             addWelcomeMessage();
         }
         
-        // Set up send button listener
-        sendButton.setOnClickListener(v -> sendMessage());
+        // Thiết lập sự kiện nút quay lại
+        backButton.setOnClickListener(v -> {
+            v.startAnimation(AnimationUtils.loadAnimation(this, R.anim.button_click));
+            onBackPressed();
+        });
+        
+        // Thiết lập sự kiện nút gửi
+        sendButton.setOnClickListener(v -> {
+            v.startAnimation(AnimationUtils.loadAnimation(this, R.anim.button_click));
+            sendMessage();
+        });
     }
     
     private void loadChatHistory() {
@@ -88,7 +101,7 @@ public class ChatActivity extends AppCompatActivity {
     
     private void addWelcomeMessage() {
         ChatMessage welcomeMessage = new ChatMessage(
-            "Welcome to the LaTeX Assistant! I can help you convert mathematical expressions to LaTeX code. What would you like to convert today?", 
+            "Chào mừng bạn đến với Trợ Lý EduVisionEduVision! Bạn muốn tôi giúp gì hôm nay?", 
             ChatMessage.TYPE_BOT
         );
         adapter.addMessage(welcomeMessage);
@@ -101,19 +114,19 @@ public class ChatActivity extends AppCompatActivity {
             return;
         }
         
-        // Add user message to chat
+        // Thêm tin nhắn của người dùng vào chat
         ChatMessage userMessage = new ChatMessage(message, ChatMessage.TYPE_USER);
         adapter.addMessage(userMessage);
         
-        // Clear input and scroll to bottom
+        // Xóa input và cuộn xuống dưới
         messageInput.setText("");
         recyclerView.smoothScrollToPosition(adapter.getItemCount() - 1);
         
-        // Show loading indicator
+        // Hiển thị trạng thái đang tải
         progressBar.setVisibility(View.VISIBLE);
         sendButton.setEnabled(false);
         
-        // Send message to chatbot
+        // Gửi tin nhắn đến chatbot
         chatbotHelper.sendMessage(message, new ChatbotHelper.ChatResponseListener() {
             @Override
             public void onResponse(String response) {
@@ -130,10 +143,10 @@ public class ChatActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
                 sendButton.setEnabled(true);
                 
-                Toast.makeText(ChatActivity.this, "Error: " + error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(ChatActivity.this, "Lỗi: " + error, Toast.LENGTH_SHORT).show();
                 
                 ChatMessage errorMessage = new ChatMessage(
-                    "Sorry, I encountered an error. Please try again.", 
+                    "Xin lỗi, tôi gặp lỗi. Vui lòng thử lại.", 
                     ChatMessage.TYPE_BOT
                 );
                 adapter.addMessage(errorMessage);
@@ -147,8 +160,15 @@ public class ChatActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             finish();
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
-} 
+    
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
+}

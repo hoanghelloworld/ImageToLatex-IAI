@@ -3,11 +3,13 @@ package com.example.image2latex;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import com.example.image2latex.chatbot.ChatActivity;
 import com.example.image2latex.documentwriter.DocumentListActivity;
+import com.example.image2latex.utils.UIHelper;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -23,8 +25,9 @@ public class HomeActivity extends AppCompatActivity {
         View.OnClickListener openConverterListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                v.startAnimation(AnimationUtils.loadAnimation(HomeActivity.this, R.anim.button_click));
                 Intent intent = new Intent(HomeActivity.this, ConversionActivity.class);
-                startActivity(intent);
+                UIHelper.startActivity(HomeActivity.this, intent);
             }
         };
         
@@ -38,8 +41,9 @@ public class HomeActivity extends AppCompatActivity {
         View.OnClickListener openChatListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                v.startAnimation(AnimationUtils.loadAnimation(HomeActivity.this, R.anim.button_click));
                 Intent intent = new Intent(HomeActivity.this, ChatActivity.class);
-                startActivity(intent);
+                UIHelper.startActivity(HomeActivity.this, intent);
             }
         };
         
@@ -53,12 +57,19 @@ public class HomeActivity extends AppCompatActivity {
         View.OnClickListener openDocumentListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                v.startAnimation(AnimationUtils.loadAnimation(HomeActivity.this, R.anim.button_click));
                 Intent intent = new Intent(HomeActivity.this, DocumentListActivity.class);
-                startActivity(intent);
+                UIHelper.startActivity(HomeActivity.this, intent);
             }
         };
         
         documentCard.setOnClickListener(openDocumentListener);
         openDocumentButton.setOnClickListener(openDocumentListener);
     }
-} 
+    
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
+}

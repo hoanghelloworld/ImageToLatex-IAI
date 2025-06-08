@@ -12,6 +12,7 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,7 +45,7 @@ public class ConversionActivity extends AppCompatActivity {
         // Enable up navigation
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle("Image to LaTeX");
+            getSupportActionBar().setTitle("Chuyển Đổi Ảnh Sang LaTeX");
         }
         
         UIHelper.initializeUI(binding);
@@ -66,6 +67,7 @@ public class ConversionActivity extends AppCompatActivity {
 
     private void setupButtonListeners() {
         binding.galleryButton.setOnClickListener(v -> {
+            v.startAnimation(AnimationUtils.loadAnimation(this, R.anim.button_click));
             if (PermissionManager.checkStoragePermission(this)) {
                 openGallery();
             } else {
@@ -74,6 +76,7 @@ public class ConversionActivity extends AppCompatActivity {
         });
         
         binding.cameraButton.setOnClickListener(v -> {
+            v.startAnimation(AnimationUtils.loadAnimation(this, R.anim.button_click));
             if (PermissionManager.checkCameraPermission(this)) {
                 openCamera();
             } else {
@@ -82,24 +85,30 @@ public class ConversionActivity extends AppCompatActivity {
         });
         
         binding.cancelButton.setOnClickListener(v -> {
+            v.startAnimation(AnimationUtils.loadAnimation(this, R.anim.button_click));
             if (converter != null && conversionThread != null && conversionThread.isAlive()) {
                 converter.cancelConversion();
-                Toast.makeText(this, "Cancelling...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Đang hủy...", Toast.LENGTH_SHORT).show();
             }
         });
         
-        binding.previewButton.setOnClickListener(v -> 
-            UIHelper.showPreview(this, binding.resultText.getText().toString()));
+        binding.previewButton.setOnClickListener(v -> {
+            v.startAnimation(AnimationUtils.loadAnimation(this, R.anim.button_click));
+            UIHelper.showPreview(this, binding.resultText.getText().toString());
+        });
         
         binding.copyButton.setOnClickListener(v -> {
+            v.startAnimation(AnimationUtils.loadAnimation(this, R.anim.button_click));
             String latexCode = binding.resultText.getText().toString();
             if (!latexCode.isEmpty()) {
                 UIHelper.copyToClipboard(this, latexCode);
             }
         });
 
-        binding.pasteButton.setOnClickListener(v -> 
-            UIHelper.pasteFromClipboard(this, binding));
+        binding.pasteButton.setOnClickListener(v -> {
+            v.startAnimation(AnimationUtils.loadAnimation(this, R.anim.button_click));
+            UIHelper.pasteFromClipboard(this, binding);
+        });
     }
     
     private void setupTextWatcher() {
@@ -130,18 +139,18 @@ public class ConversionActivity extends AppCompatActivity {
             startActivityForResult(UIHelper.createCameraIntent(this, cameraImageUri), 
                 CAMERA_REQUEST_CODE);
         } catch (IOException e) {
-            Toast.makeText(this, "Error creating image file", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Lỗi khi tạo tệp ảnh", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void processImage(Bitmap bitmap) {
         if (bitmap == null) {
-            Toast.makeText(this, "Failed to load image", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Không thể tải ảnh", Toast.LENGTH_SHORT).show();
             return;
         }
         
         binding.imageView.setImageBitmap(bitmap);
-        binding.resultText.setText("Processing image...");
+        binding.resultText.setText("Đang xử lý ảnh...");
         UIHelper.updateUIState(binding, false);
         
         conversionThread = new Thread(() -> {
@@ -162,13 +171,13 @@ public class ConversionActivity extends AppCompatActivity {
     }
 
     private void handleProcessingError(Exception e) {
-        binding.resultText.setText("Error: " + e.getMessage());
+        binding.resultText.setText("Lỗi: " + e.getMessage());
         UIHelper.updateUIState(binding, true);
     }
 
     private void handleConverterInitError(Exception e) {
         runOnUiThread(() -> {
-            Toast.makeText(this, "Error initializing: " + e.getMessage(), 
+            Toast.makeText(this, "Lỗi khởi tạo: " + e.getMessage(), 
                 Toast.LENGTH_LONG).show();
             finish();
         });
@@ -198,6 +207,7 @@ public class ConversionActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             finish();
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -219,9 +229,10 @@ public class ConversionActivity extends AppCompatActivity {
         if (conversionThread != null && conversionThread.isAlive() && 
             binding.cancelButton.getVisibility() == View.VISIBLE) {
             converter.cancelConversion();
-            Toast.makeText(this, "Cancelling operation...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Đang hủy thao tác...", Toast.LENGTH_SHORT).show();
             return;
         }
         super.onBackPressed();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
-} 
+}

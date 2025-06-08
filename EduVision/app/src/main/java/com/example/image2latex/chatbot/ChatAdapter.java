@@ -10,56 +10,50 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.image2latex.R;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
-public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder> {
     
     private List<ChatMessage> messages = new ArrayList<>();
-    private SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+    private int userMessageBackground = R.drawable.chat_user_bubble;
+    private int botMessageBackground = R.drawable.chat_bot_bubble;
     
-    public void addMessage(ChatMessage message) {
-        messages.add(message);
-        notifyItemInserted(messages.size() - 1);
+    // Getter and Setter for message backgrounds
+    public void setUserMessageBackground(int resId) {
+        this.userMessageBackground = resId;
     }
     
-    @Override
-    public int getItemViewType(int position) {
-        return messages.get(position).getType();
+    public void setBotMessageBackground(int resId) {
+        this.botMessageBackground = resId;
     }
     
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ChatViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view;
         if (viewType == ChatMessage.TYPE_USER) {
-            View view = LayoutInflater.from(parent.getContext())
+            view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.item_chat_user, parent, false);
-            return new UserMessageViewHolder(view);
         } else {
-            View view = LayoutInflater.from(parent.getContext())
+            view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.item_chat_bot, parent, false);
-            return new BotMessageViewHolder(view);
         }
+        return new ChatViewHolder(view);
     }
     
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ChatViewHolder holder, int position) {
         ChatMessage message = messages.get(position);
-        String formattedTime = timeFormat.format(new Date(message.getTimestamp()));
+        holder.messageText.setText(message.getText());
         
-        if (holder instanceof UserMessageViewHolder) {
-            UserMessageViewHolder userHolder = (UserMessageViewHolder) holder;
-            userHolder.messageText.setText(message.getMessage());
-            userHolder.timeText.setText(formattedTime);
-            userHolder.messageText.setTextColor(0xFF000000); // Black text
-        } else if (holder instanceof BotMessageViewHolder) {
-            BotMessageViewHolder botHolder = (BotMessageViewHolder) holder;
-            botHolder.messageText.setText(message.getMessage());
-            botHolder.timeText.setText(formattedTime);
-            botHolder.messageText.setTextColor(0xFF000000); // Black text
+        // Thiết lập background tùy chỉnh
+        if (message.getType() == ChatMessage.TYPE_USER) {
+            holder.messageContainer.setBackgroundResource(userMessageBackground);
+            holder.messageText.setTextColor(0xFFFFFFFF); // Màu trắng cho tin nhắn người dùng
+        } else {
+            holder.messageContainer.setBackgroundResource(botMessageBackground);
+            holder.messageText.setTextColor(0xFF212121); // Màu đen cho tin nhắn bot
         }
     }
     
@@ -68,23 +62,29 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return messages.size();
     }
     
-    static class UserMessageViewHolder extends RecyclerView.ViewHolder {
-        TextView messageText, timeText;
-        
-        UserMessageViewHolder(View itemView) {
-            super(itemView);
-            messageText = itemView.findViewById(R.id.text_message_user);
-            timeText = itemView.findViewById(R.id.text_time_user);
-        }
+    @Override
+    public int getItemViewType(int position) {
+        return messages.get(position).getType();
     }
     
-    static class BotMessageViewHolder extends RecyclerView.ViewHolder {
-        TextView messageText, timeText;
+    public void addMessage(ChatMessage message) {
+        messages.add(message);
+        notifyItemInserted(messages.size() - 1);
+    }
+    
+    public void setMessages(List<ChatMessage> messages) {
+        this.messages = messages;
+        notifyDataSetChanged();
+    }
+    
+    static class ChatViewHolder extends RecyclerView.ViewHolder {
+        TextView messageText;
+        View messageContainer;
         
-        BotMessageViewHolder(View itemView) {
+        ChatViewHolder(@NonNull View itemView) {
             super(itemView);
-            messageText = itemView.findViewById(R.id.text_message_bot);
-            timeText = itemView.findViewById(R.id.text_time_bot);
+            messageText = itemView.findViewById(R.id.text_message);
+            messageContainer = itemView.findViewById(R.id.message_container);
         }
     }
 }

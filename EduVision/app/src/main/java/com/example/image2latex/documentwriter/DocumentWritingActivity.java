@@ -64,18 +64,18 @@ public class DocumentWritingActivity extends AppCompatActivity {
     private static final int MEDIUM_TEXT_SIZE = 16;
     private static final int LARGE_TEXT_SIZE = 20;
 
-    // AI request types
-    private static final String AI_IMPROVE_WRITING = "Improve my writing: ";
-    private static final String AI_FIX_GRAMMAR = "Fix spelling and grammar: ";
-    private static final String AI_TRANSLATE_PREFIX = "Translate to ";
-    private static final String AI_EXPLAIN = "Explain this: ";
-    private static final String AI_MAKE_SHORTER = "Make this shorter: ";
-    private static final String AI_MAKE_LONGER = "Make this longer with more details: ";
-    private static final String AI_CHANGE_TONE = "Change the tone to be more professional: ";
+    // AI request types - chuyển các prompt sang tiếng Việt
+    private static final String AI_IMPROVE_WRITING = "Cải thiện văn bản sau: ";
+    private static final String AI_FIX_GRAMMAR = "Sửa lỗi chính tả và ngữ pháp: ";
+    private static final String AI_TRANSLATE_PREFIX = "Dịch sang ";
+    private static final String AI_EXPLAIN = "Giải thích nội dung sau: ";
+    private static final String AI_MAKE_SHORTER = "Tóm tắt ngắn gọn: ";
+    private static final String AI_MAKE_LONGER = "Mở rộng với nhiều chi tiết hơn: ";
+    private static final String AI_CHANGE_TONE = "Thay đổi giọng điệu chuyên nghiệp hơn: ";
 
-    // Language codes for translation
+    // Language codes for translation - chuyển sang tiếng Việt
     private static final String[] LANGUAGE_NAMES = {
-        "English", "Vietnamese", "Chinese", "Japanese", "French", "Korean", "Spanish", "German"
+        "Tiếng Anh", "Tiếng Việt", "Tiếng Trung", "Tiếng Nhật", "Tiếng Pháp", "Tiếng Hàn", "Tiếng Tây Ban Nha", "Tiếng Đức"
     };
 
     // Regex pattern to identify LaTeX formulas wrapped in $...$ or $$...$$
@@ -123,7 +123,7 @@ public class DocumentWritingActivity extends AppCompatActivity {
                 // Create new document if loading failed
                 Log.d(TAG, "Creating new document as current is null");
                 currentDocument = new Document();
-                currentDocument.setTitle("Untitled Document");
+                currentDocument.setTitle("Tài liệu không tên");
                 currentDocument.setContent("");
             }
 
@@ -260,7 +260,7 @@ public class DocumentWritingActivity extends AppCompatActivity {
             });
         } catch (Exception e) {
             Log.e(TAG, "Error in onCreate", e);
-            Toast.makeText(this, "Error starting document editor: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Lỗi khi mở trình soạn thảo: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -382,23 +382,23 @@ public class DocumentWritingActivity extends AppCompatActivity {
 
     private void showTextColorMenu() {
         PopupMenu popup = new PopupMenu(this, btnTextColor);
-        popup.getMenu().add("Black").setOnMenuItemClickListener(item -> {
+        popup.getMenu().add("Đen").setOnMenuItemClickListener(item -> {
             applyTextColor(Color.BLACK);
             return true;
         });
-        popup.getMenu().add("Red").setOnMenuItemClickListener(item -> {
+        popup.getMenu().add("Đỏ").setOnMenuItemClickListener(item -> {
             applyTextColor(Color.RED);
             return true;
         });
-        popup.getMenu().add("Blue").setOnMenuItemClickListener(item -> {
+        popup.getMenu().add("Xanh Dương").setOnMenuItemClickListener(item -> {
             applyTextColor(Color.BLUE);
             return true;
         });
-        popup.getMenu().add("Green").setOnMenuItemClickListener(item -> {
+        popup.getMenu().add("Xanh Lá").setOnMenuItemClickListener(item -> {
             applyTextColor(Color.GREEN);
             return true;
         });
-        popup.getMenu().add("Yellow Background").setOnMenuItemClickListener(item -> {
+        popup.getMenu().add("Nền Vàng").setOnMenuItemClickListener(item -> {
             applyBackgroundColor(Color.YELLOW);
             return true;
         });
@@ -443,31 +443,31 @@ public class DocumentWritingActivity extends AppCompatActivity {
 
     private void showTurnIntoMenu() {
         PopupMenu popup = new PopupMenu(this, btnTurnInto);
-        popup.getMenu().add("Plain Text").setOnMenuItemClickListener(item -> {
+        popup.getMenu().add("Văn Bản Thường").setOnMenuItemClickListener(item -> {
             turnIntoPlainText();
             return true;
         });
-        popup.getMenu().add("Heading 1").setOnMenuItemClickListener(item -> {
+        popup.getMenu().add("Tiêu Đề 1").setOnMenuItemClickListener(item -> {
             turnIntoHeading(1.5f);
             return true;
         });
-        popup.getMenu().add("Heading 2").setOnMenuItemClickListener(item -> {
+        popup.getMenu().add("Tiêu Đề 2").setOnMenuItemClickListener(item -> {
             turnIntoHeading(1.3f);
             return true;
         });
-        popup.getMenu().add("Heading 3").setOnMenuItemClickListener(item -> {
+        popup.getMenu().add("Tiêu Đề 3").setOnMenuItemClickListener(item -> {
             turnIntoHeading(1.1f);
             return true;
         });
-        popup.getMenu().add("Code").setOnMenuItemClickListener(item -> {
+        popup.getMenu().add("Mã").setOnMenuItemClickListener(item -> {
             turnIntoCode();
             return true;
         });
-        popup.getMenu().add("Block Quote").setOnMenuItemClickListener(item -> {
+        popup.getMenu().add("Trích Dẫn").setOnMenuItemClickListener(item -> {
             turnIntoBlockQuote();
             return true;
         });
-        popup.getMenu().add("Bulleted List").setOnMenuItemClickListener(item -> {
+        popup.getMenu().add("Danh Sách Đánh Dấu").setOnMenuItemClickListener(item -> {
             turnIntoBulletedList();
             return true;
         });
@@ -574,44 +574,44 @@ public class DocumentWritingActivity extends AppCompatActivity {
 
     private void showAskAIMenu() {
         if (processingAiRequest) {
-            Toast.makeText(this, "Already processing an AI request, please wait", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Đang xử lý yêu cầu AI, vui lòng đợi", Toast.LENGTH_SHORT).show();
             return;
         }
 
         PopupMenu popup = new PopupMenu(this, btnAskAI);
-        popup.getMenu().add("Ask AI Anything").setOnMenuItemClickListener(item -> {
+        popup.getMenu().add("Hỏi AI Bất Kỳ").setOnMenuItemClickListener(item -> {
             showAskAIDialog();
             return true;
         });
-        popup.getMenu().add("Explain").setOnMenuItemClickListener(item -> {
+        popup.getMenu().add("Giải Thích").setOnMenuItemClickListener(item -> {
             sendAIRequest(AI_EXPLAIN);
             return true;
         });
-        popup.getMenu().add("Improve Writing").setOnMenuItemClickListener(item -> {
+        popup.getMenu().add("Cải Thiện Văn Bản").setOnMenuItemClickListener(item -> {
             sendAIRequest(AI_IMPROVE_WRITING);
             return true;
         });
-        popup.getMenu().add("Fix Spelling & Grammar").setOnMenuItemClickListener(item -> {
+        popup.getMenu().add("Sửa Lỗi Chính Tả & Ngữ Pháp").setOnMenuItemClickListener(item -> {
             sendAIRequest(AI_FIX_GRAMMAR);
             return true;
         });
         
         // Add a submenu for Translation with multiple language options
-        MenuItem translateItem = popup.getMenu().add("Translate");
+        MenuItem translateItem = popup.getMenu().add("Dịch");
         translateItem.setOnMenuItemClickListener(item -> {
             showTranslationLanguageMenu();
             return true;
         });
         
-        popup.getMenu().add("Make Shorter").setOnMenuItemClickListener(item -> {
+        popup.getMenu().add("Rút Gọn").setOnMenuItemClickListener(item -> {
             sendAIRequest(AI_MAKE_SHORTER);
             return true;
         });
-        popup.getMenu().add("Make Longer").setOnMenuItemClickListener(item -> {
+        popup.getMenu().add("Mở Rộng").setOnMenuItemClickListener(item -> {
             sendAIRequest(AI_MAKE_LONGER);
             return true;
         });
-        popup.getMenu().add("Change Tone").setOnMenuItemClickListener(item -> {
+        popup.getMenu().add("Thay Đổi Giọng Điệu").setOnMenuItemClickListener(item -> {
             sendAIRequest(AI_CHANGE_TONE);
             return true;
         });
@@ -640,7 +640,7 @@ public class DocumentWritingActivity extends AppCompatActivity {
         
         // Create and configure the dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Ask AI Anything");
+        builder.setTitle("Hỏi AI");
         
         // Create a layout for the dialog
         LinearLayout layout = new LinearLayout(this);
@@ -649,7 +649,7 @@ public class DocumentWritingActivity extends AppCompatActivity {
         
         // Create the input field
         final EditText input = new EditText(this);
-        input.setHint("What would you like to ask?");
+        input.setHint("Bạn muốn hỏi gì?");
         
         // Add info about selected text if any
         TextView selectionInfo = new TextView(this);
@@ -658,10 +658,10 @@ public class DocumentWritingActivity extends AppCompatActivity {
             String truncatedText = selectedText.length() > 50 
                 ? selectedText.substring(0, 47) + "..." 
                 : selectedText;
-            selectionInfo.setText("Your query will include the selected text: \"" + truncatedText + "\"");
+            selectionInfo.setText("Câu hỏi của bạn sẽ bao gồm đoạn văn bản đã chọn: \"" + truncatedText + "\"");
             selectionInfo.setTextColor(Color.GRAY);
         } else {
-            selectionInfo.setText("No text is currently selected.");
+            selectionInfo.setText("Không có văn bản nào được chọn.");
             selectionInfo.setTextColor(Color.GRAY);
         }
         
@@ -672,7 +672,7 @@ public class DocumentWritingActivity extends AppCompatActivity {
         builder.setView(layout);
         
         // Set up buttons
-        builder.setPositiveButton("Ask", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Hỏi", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String question = input.getText().toString().trim();
@@ -687,7 +687,7 @@ public class DocumentWritingActivity extends AppCompatActivity {
             }
         });
         
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
@@ -699,13 +699,13 @@ public class DocumentWritingActivity extends AppCompatActivity {
     
     private void processAIQueryWithSelection(String question, String selectedText) {
         processingAiRequest = true;
-        Toast.makeText(this, "Processing request...", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Đang xử lý yêu cầu...", Toast.LENGTH_SHORT).show();
         
         // Show loading indicator
         documentEditor.setEnabled(false);
         
         // Format the query to include both the question and the selected text
-        String formattedQuery = question + "\n\nReference Text: " + selectedText;
+        String formattedQuery = question + "\n\nVăn bản tham khảo: " + selectedText;
         
         aiHelper.sendMessage(formattedQuery, new ChatbotHelper.ChatResponseListener() {
             @Override
@@ -713,7 +713,7 @@ public class DocumentWritingActivity extends AppCompatActivity {
                 runOnUiThread(() -> {
                     // Show the response in the preview frame
                     if (previewFrame != null && previewTitle != null && previewContent != null) {
-                        previewTitle.setText("AI Response");
+                        previewTitle.setText("Phản Hồi AI");
                         previewContent.setText(response);
                         previewFrame.setVisibility(View.VISIBLE);
                         
@@ -731,7 +731,7 @@ public class DocumentWritingActivity extends AppCompatActivity {
             @Override
             public void onError(String error) {
                 runOnUiThread(() -> {
-                    Toast.makeText(DocumentWritingActivity.this, "Error: " + error, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DocumentWritingActivity.this, "Lỗi: " + error, Toast.LENGTH_SHORT).show();
                     documentEditor.setEnabled(true);
                     processingAiRequest = false;
                 });
@@ -741,7 +741,7 @@ public class DocumentWritingActivity extends AppCompatActivity {
 
     private void processCustomAIRequest(String question) {
         processingAiRequest = true;
-        Toast.makeText(this, "Processing request...", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Đang xử lý yêu cầu...", Toast.LENGTH_SHORT).show();
 
         // Show loading indicator
         documentEditor.setEnabled(false);
@@ -757,7 +757,7 @@ public class DocumentWritingActivity extends AppCompatActivity {
                 runOnUiThread(() -> {
                     // Show the response in the preview frame
                     if (previewFrame != null && previewTitle != null && previewContent != null) {
-                        previewTitle.setText("AI Response");
+                        previewTitle.setText("Phản Hồi AI");
                         previewContent.setText(response);
                         previewFrame.setVisibility(View.VISIBLE);
 
@@ -775,7 +775,7 @@ public class DocumentWritingActivity extends AppCompatActivity {
             @Override
             public void onError(String error) {
                 runOnUiThread(() -> {
-                    Toast.makeText(DocumentWritingActivity.this, "Error: " + error, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DocumentWritingActivity.this, "Lỗi: " + error, Toast.LENGTH_SHORT).show();
                     documentEditor.setEnabled(true);
                     processingAiRequest = false;
                 });
@@ -795,7 +795,7 @@ public class DocumentWritingActivity extends AppCompatActivity {
 
             if (!TextUtils.isEmpty(selectedText)) {
                 processingAiRequest = true;
-                Toast.makeText(this, "Processing request...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Đang xử lý yêu cầu...", Toast.LENGTH_SHORT).show();
 
                 // Show loading indicator
                 documentEditor.setEnabled(false);
@@ -809,7 +809,7 @@ public class DocumentWritingActivity extends AppCompatActivity {
                 String prompt = requestType + selectedText;
                 if (requestType.startsWith(AI_TRANSLATE_PREFIX)) {
                     // For translation, try to detect what language they're starting with
-                    prompt += "\n\nDetect the source language and translate to the requested language.";
+                    prompt += "\n\nPhát hiện ngôn ngữ nguồn và dịch sang ngôn ngữ yêu cầu.";
                 }
 
                 // Send only the current selection to the AI
@@ -820,16 +820,16 @@ public class DocumentWritingActivity extends AppCompatActivity {
                             // Show the response in the preview frame
                             if (previewFrame != null && previewTitle != null && previewContent != null) {
                                 // Set an appropriate title based on the request type
-                                String title = "AI Response";
+                                String title = "Phản Hồi AI";
                                 
                                 if (requestType.startsWith(AI_TRANSLATE_PREFIX)) {
-                                    title = "Translation";
+                                    title = "Bản Dịch";
                                 } else if (requestType.equals(AI_EXPLAIN)) {
-                                    title = "Explanation";
+                                    title = "Giải Thích";
                                 } else if (requestType.equals(AI_IMPROVE_WRITING)) {
-                                    title = "Improved Writing";
+                                    title = "Văn Bản Cải Thiện";
                                 } else if (requestType.equals(AI_FIX_GRAMMAR)) {
-                                    title = "Grammar Correction";
+                                    title = "Sửa Lỗi Ngữ Pháp";
                                 }
                                 
                                 previewTitle.setText(title);
@@ -850,7 +850,7 @@ public class DocumentWritingActivity extends AppCompatActivity {
                     @Override
                     public void onError(String error) {
                         runOnUiThread(() -> {
-                            Toast.makeText(DocumentWritingActivity.this, "Error: " + error, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(DocumentWritingActivity.this, "Lỗi: " + error, Toast.LENGTH_SHORT).show();
                             documentEditor.setEnabled(true);
                             processingAiRequest = false;
                         });
@@ -858,7 +858,7 @@ public class DocumentWritingActivity extends AppCompatActivity {
                 });
             }
         } else {
-            Toast.makeText(this, "Please select text first", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Vui lòng chọn văn bản trước", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -879,13 +879,13 @@ public class DocumentWritingActivity extends AppCompatActivity {
     private void showLatexInputDialog() {
         // Create an input dialog for LaTeX formula
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Insert LaTeX Formula");
+        builder.setTitle("Chèn Công Thức LaTeX");
 
         final EditText input = new EditText(this);
-        input.setHint("Enter your LaTeX formula");
+        input.setHint("Nhập công thức LaTeX của bạn");
         builder.setView(input);
 
-        builder.setPositiveButton("Insert", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Chèn", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String formula = input.getText().toString();
@@ -900,7 +900,7 @@ public class DocumentWritingActivity extends AppCompatActivity {
             }
         });
 
-        builder.setNeutralButton("Preview", new DialogInterface.OnClickListener() {
+        builder.setNeutralButton("Xem Trước", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String formula = input.getText().toString();
@@ -909,7 +909,7 @@ public class DocumentWritingActivity extends AppCompatActivity {
             }
         });
 
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
@@ -919,7 +919,6 @@ public class DocumentWritingActivity extends AppCompatActivity {
         builder.show();
     }
 
-    
     private void renderDocument() {
         try {
             // Save the document first
@@ -935,9 +934,10 @@ public class DocumentWritingActivity extends AppCompatActivity {
             startActivity(intent);
         } catch (Exception e) {
             Log.e(TAG, "Error rendering document", e);
-            Toast.makeText(this, "Error rendering document: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Lỗi khi hiển thị tài liệu: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
+    
     private void saveDocument() {
         try {
             String content = documentEditor.getText().toString();
@@ -947,13 +947,13 @@ public class DocumentWritingActivity extends AppCompatActivity {
 
             // Save the document
             if (documentManager.saveDocument(currentDocument)) {
-                Toast.makeText(this, "Document saved", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Tài liệu đã được lưu", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, "Failed to save document", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Không thể lưu tài liệu", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
             Log.e("DocumentWriter", "Error saving document", e);
-            Toast.makeText(this, "Error saving document", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Lỗi khi lưu tài liệu", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -1054,7 +1054,7 @@ public class DocumentWritingActivity extends AppCompatActivity {
         String html = renderHtml();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("HTML Preview");
+        builder.setTitle("Xem Trước HTML");
 
         WebView webView = new WebView(this);
         webView.getSettings().setJavaScriptEnabled(true);
@@ -1077,10 +1077,10 @@ public class DocumentWritingActivity extends AppCompatActivity {
                 ViewGroup.LayoutParams.MATCH_PARENT));
         
         builder.setView(webView);
-        builder.setPositiveButton("Close", null);
+        builder.setPositiveButton("Đóng", null);
 
         if (mode == EXPORT_HTML) {
-            builder.setNeutralButton("Save as HTML", (dialog, which) -> {
+            builder.setNeutralButton("Lưu Thành HTML", (dialog, which) -> {
                 saveHtmlToFile(html);
             });
         }
@@ -1107,9 +1107,9 @@ public class DocumentWritingActivity extends AppCompatActivity {
             fos.write(html.getBytes());
             fos.close();
 
-            Toast.makeText(this, "Saved to Downloads/" + fileName, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Đã lưu vào Downloads/" + fileName, Toast.LENGTH_LONG).show();
         } catch (IOException e) {
-            Toast.makeText(this, "Error saving HTML: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Lỗi khi lưu HTML: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             Log.e(TAG, "Error saving HTML", e);
         }
     }

@@ -10,18 +10,19 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
+        android:background="@drawable/card_gradient_background"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:title="Document Editor" />
+        app:title="Soạn thảo tài liệu"
+        app:titleTextColor="@android:color/white" />
 
     <HorizontalScrollView
         android:id="@+id/formatting_tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#EEEEEE"
+        android:background="#F5F5F5"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
 
         <LinearLayout
@@ -32,33 +33,45 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_font_small"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
                 android:minWidth="48dp"
-                android:text="S"
-                android:textSize="14sp" />
+                android:text="Nhỏ"
+                android:textSize="14sp" 
+                app:icon="@drawable/ic_text_format_small"
+                app:iconSize="16dp"
+                app:iconTint="@color/purple_500"
+                app:strokeColor="@color/purple_500"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_font_medium"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
                 android:minWidth="48dp"
-                android:text="M"
-                android:textSize="16sp" />
+                android:text="Vừa"
+                android:textSize="16sp"
+                app:icon="@drawable/ic_text_format"
+                app:iconSize="18dp"
+                app:iconTint="@color/purple_500"
+                app:strokeColor="@color/purple_500" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_font_large"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
                 android:minWidth="48dp"
-                android:text="L"
-                android:textSize="18sp" />
+                android:text="Lớn"
+                android:textSize="18sp"
+                app:icon="@drawable/ic_text_format_large"
+                app:iconSize="20dp"
+                app:iconTint="@color/purple_500"
+                app:strokeColor="@color/purple_500" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_insert_latex"
@@ -66,7 +79,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="Insert LaTeX" />
+                android:text="Chèn LaTeX"
+                app:icon="@drawable/ic_latex"
+                app:iconTint="@color/purple_500"
+                android:textColor="@color/purple_500" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_save"
@@ -74,14 +90,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="Save" />
+                android:text="Lưu"
+                app:icon="@drawable/ic_save"
+                app:iconTint="@color/purple_500"
+                android:textColor="@color/purple_500" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_render"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="Render" />
+                android:text="Xem"
+                app:icon="@drawable/ic_preview"
+                app:iconTint="@color/purple_500"
+                android:textColor="@color/purple_500" />
         </LinearLayout>
     </HorizontalScrollView>
 
@@ -107,55 +130,68 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_bold"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
                     android:minWidth="48dp"
-                    android:text="B"
-                    android:textStyle="bold" />
+                    app:icon="@drawable/ic_bold"
+                    app:iconTint="@color/purple_500"
+                    app:strokeColor="@color/purple_500" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_italic"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
                     android:minWidth="48dp"
-                    android:text="I"
-                    android:textStyle="italic" />
+                    app:icon="@drawable/ic_italic"
+                    app:iconTint="@color/purple_500"
+                    app:strokeColor="@color/purple_500" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_underline"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
                     android:minWidth="48dp"
-                    android:text="U" />
+                    app:icon="@drawable/ic_underline"
+                    app:iconTint="@color/purple_500"
+                    app:strokeColor="@color/purple_500" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_text_color"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
-                    android:text="Color" />
+                    android:text="Màu"
+                    app:icon="@drawable/ic_color"
+                    app:iconTint="@color/purple_500"
+                    app:strokeColor="@color/purple_500" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_turn_into"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
-                    android:text="Turn Into" />
+                    android:text="Định dạng"
+                    app:icon="@drawable/ic_format"
+                    app:iconTint="@color/purple_500"
+                    app:strokeColor="@color/purple_500" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_ask_ai"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Ask AI" />
+                    android:text="Hỏi AI"
+                    app:icon="@drawable/ic_ai_assistant"
+                    app:iconTint="@color/purple_500"
+                    app:strokeColor="@color/purple_500" />
             </LinearLayout>
         </HorizontalScrollView>
     </LinearLayout>
@@ -166,7 +202,7 @@
         android:layout_height="0dp"
         android:background="@android:color/white"
         android:gravity="top|start"
-        android:hint="Start writing your document here..."
+        android:hint="Bắt đầu viết tài liệu của bạn tại đây..."
         android:inputType="textMultiLine|textCapSentences"
         android:padding="16dp"
         android:scrollbars="vertical"
@@ -181,7 +217,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:visibility="gone"
-        app:cardCornerRadius="8dp"
+        app:cardCornerRadius="16dp"
         app:cardElevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -193,13 +229,29 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <TextView
-                android:id="@+id/ai_preview_title"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="AI Response"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_ai_response"
+                    app:tint="@color/purple_700"
+                    android:layout_marginEnd="8dp"/>
+
+                <TextView
+                    android:id="@+id/ai_preview_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Phản hồi từ AI"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/purple_700" />
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
@@ -229,20 +281,26 @@
                 android:gravity="end"
                 android:orientation="horizontal">
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/ai_preview_insert"
                     style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
-                    android:text="Insert" />
+                    android:text="Chèn"
+                    android:textColor="@color/purple_500"
+                    app:icon="@drawable/ic_insert"
+                    app:iconTint="@color/purple_500" />
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/ai_preview_close"
                     style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Close" />
+                    android:text="Đóng"
+                    android:textColor="@color/purple_500"
+                    app:icon="@drawable/ic_close"
+                    app:iconTint="@color/purple_500" />
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

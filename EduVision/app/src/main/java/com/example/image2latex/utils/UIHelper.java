@@ -1,14 +1,22 @@
 package com.example.image2latex.utils;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.app.Activity;
 import android.content.ClipboardManager;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
+import android.os.Build;
 import android.provider.MediaStore;
 import android.view.View;
+import android.view.ViewAnimationUtils;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Toast;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.content.FileProvider;
 import androidx.viewbinding.ViewBinding;
 import android.widget.TextView;
@@ -95,7 +103,7 @@ public class UIHelper {
         ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clip = ClipData.newPlainText("LaTeX Code", text);
         clipboard.setPrimaryClip(clip);
-        Toast.makeText(context, "LaTeX code copied to clipboard", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "Đã sao chép mã LaTeX vào bộ nhớ tạm", Toast.LENGTH_SHORT).show();
     }
 
     public static void pasteFromClipboard(Context context, ViewBinding binding) {
@@ -108,10 +116,10 @@ public class UIHelper {
             CharSequence pastedText = clipboard.getPrimaryClip().getItemAt(0).getText();
             if (pastedText != null) {
                 resultText.setText(pastedText.toString());
-                Toast.makeText(context, "Text pasted from clipboard", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Đã dán văn bản từ bộ nhớ tạm", Toast.LENGTH_SHORT).show();
             }
         } else {
-            Toast.makeText(context, "No text to paste", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Không có văn bản để dán", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -121,7 +129,82 @@ public class UIHelper {
             LaTeXPreviewDialog previewDialog = new LaTeXPreviewDialog(context, latexCode);
             previewDialog.show();
         } else {
-            Toast.makeText(context, "No LaTeX code to preview", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Không có mã LaTeX để xem trước", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    // Hiệu ứng chuyển đổi màn hình
+    public static void startActivity(Activity activity, Intent intent) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ActivityOptionsCompat options = ActivityOptionsCompat.
+                    makeSceneTransitionAnimation(activity);
+            activity.startActivity(intent, options.toBundle());
+        } else {
+            activity.startActivity(intent);
+            activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        }
+    }
+
+    // Hiệu ứng hiển thị và ẩn view với animation
+    public static void showViewWithAnimation(final View view) {
+        if (view.getVisibility() == View.VISIBLE) return;
+        
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            int cx = view.getWidth() / 2;
+            int cy = view.getHeight() / 2;
+            float finalRadius = (float) Math.hypot(cx, cy);
+            
+            Animator anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, 0, finalRadius);
+            anim.setDuration(300);
+            anim.setInterpolator(new DecelerateInterpolator());
+            
+            view.setVisibility(View.VISIBLE);
+            anim.start();
+        } else {
+            view.setAlpha(0f);
+            view.setVisibility(View.VISIBLE);
+            view.animate()
+                    .alpha(1f)
+                    .setDuration(300)
+                    .setInterpolator(new DecelerateInterpolator())
+                    .start();
+        }
+    }
+    
+    public static void hideViewWithAnimation(final View view) {
+        if (view.getVisibility() != View.VISIBLE) return;
+        
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            int cx = view.getWidth() / 2;
+            int cy = view.getHeight() / 2;
+            float initialRadius = (float) Math.hypot(cx, cy);
+            
+            Animator anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, initialRadius, 0);
+            anim.setDuration(300);
+            anim.setInterpolator(new AccelerateInterpolator());
+            
+            anim.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    view.setVisibility(View.GONE);
+                }
+            });
+            
+            anim.start();
+        } else {
+            view.animate()
+                    .alpha(0f)
+                    .setDuration(300)
+                    .setInterpolator(new AccelerateInterpolator())
+                    .setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            super.onAnimationEnd(animation);
+                            view.setVisibility(View.GONE);
+                        }
+                    })
+                    .start();
         }
     }
 

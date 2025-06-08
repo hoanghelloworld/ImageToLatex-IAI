@@ -3,9 +3,12 @@ package com.example.image2latex;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+
+import com.example.image2latex.utils.UIHelper;
 
 public class MainActivity extends AppCompatActivity {
     
@@ -21,7 +24,9 @@ public class MainActivity extends AppCompatActivity {
         conversionCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Open camera/gallery activity
+                // Áp dụng hiệu ứng khi nhấn
+                v.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.button_click));
+                // Mở màn hình chuyển đổi ảnh với hiệu ứng
                 startConversionActivity();
             }
         });
@@ -29,7 +34,9 @@ public class MainActivity extends AppCompatActivity {
         btnConvertImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Open camera/gallery activity
+                // Áp dụng hiệu ứng khi nhấn
+                v.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.button_click));
+                // Mở màn hình chuyển đổi ảnh với hiệu ứng
                 startConversionActivity();
             }
         });
@@ -41,7 +48,9 @@ public class MainActivity extends AppCompatActivity {
         chatCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Open chat activity
+                // Áp dụng hiệu ứng khi nhấn
+                v.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.button_click));
+                // Mở màn hình chat với hiệu ứng
                 startChatActivity();
             }
         });
@@ -49,18 +58,28 @@ public class MainActivity extends AppCompatActivity {
         btnStartChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Open chat activity
+                // Áp dụng hiệu ứng khi nhấn
+                v.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.button_click));
+                // Mở màn hình chat với hiệu ứng
                 startChatActivity();
             }
         });
     }
     
     private void startConversionActivity() {
-        startActivity(new Intent(this, ConversionActivity.class));
+        Intent intent = new Intent(this, ConversionActivity.class);
+        UIHelper.startActivity(this, intent);
     }
     
     private void startChatActivity() {
         // Start the ChatActivity from the chatbot package
-        startActivity(new Intent(this, com.example.image2latex.chatbot.ChatActivity.class));
+        Intent intent = new Intent(this, com.example.image2latex.chatbot.ChatActivity.class);
+        UIHelper.startActivity(this, intent);
+    }
+    
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }

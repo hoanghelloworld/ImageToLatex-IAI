@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/purple_500"
+    android:background="@drawable/gradient_background"
     tools:context=".HomeActivity">
 
     <TextView
@@ -12,10 +12,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Image2LaTeX"
+        android:text="EduVision"
         android:textColor="#FFFFFF"
-        android:textSize="32sp"
+        android:textSize="42sp"
         android:textStyle="bold"
+        android:elevation="4dp"
+        android:shadowColor="#80000000"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="3"
+        android:fontFamily="sans-serif-medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -28,9 +34,14 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:gravity="center"
-        android:text="Convert mathematical formulas to LaTeX code and get help from our AI assistant"
-        android:textColor="#FFFFFF"
+        android:text="Soạn thảo tài liệu bằng LaTeX và nhận sự trợ giúp từ trợ lý AI của chúng tôi"
+        android:textColor="#F5F5F5"
         android:textSize="16sp"
+        android:shadowColor="#80000000"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="2"
+        android:fontFamily="sans-serif-light"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appTitle" />
@@ -43,8 +54,9 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="8dp"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="8dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="12dp"
         app:layout_constraintBottom_toTopOf="@+id/chatCard"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,30 +66,41 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/conversion_card_bg"
             android:padding="16dp">
 
-            <ImageView
-                android:id="@+id/conversionIcon"
+            <!-- Thay đổi cách hiển thị icon - dùng FrameLayout để tách nền và icon -->
+            <FrameLayout
+                android:id="@+id/conversionIconContainer"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
-                android:src="@android:drawable/ic_menu_camera"
+                android:background="@drawable/icon_circle_bg_purple"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/purple_500" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/conversionIcon"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_image_search"
+                    app:tint="#FFFFFF" />
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/conversionTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Image to LaTeX Converter"
-                android:textColor="#000000"
+                android:text="Chuyển Đổi Ảnh Sang LaTeX"
+                android:textColor="#9C27B0"
                 android:textSize="20sp"
                 android:textStyle="bold"
+                android:fontFamily="sans-serif-medium"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/conversionIcon" />
+                app:layout_constraintTop_toBottomOf="@+id/conversionIconContainer" />
 
             <TextView
                 android:id="@+id/conversionDescription"
@@ -85,25 +108,32 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
-                android:text="Convert mathematical formulas from images to LaTeX code. Take a photo or choose from gallery."
-                android:textColor="#555555"
+                android:text="Chuyển đổi công thức toán học từ ảnh sang mã LaTeX. Chụp ảnh hoặc chọn từ thư viện."
+                android:textColor="#616161"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/conversionTitle" />
 
-            <Button
+            <!-- Sửa nút để không bị che lấp chữ -->
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/openConverterButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:backgroundTint="@color/purple_500"
-                android:text="Open Converter"
+                style="@style/Widget.MaterialComponents.Button"
+                android:backgroundTint="#9C27B0"
+                android:text="Mở Công Cụ Chuyển Đổi"
+                android:textColor="#FFFFFF"
+                app:cornerRadius="24dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/conversionDescription"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.0"
+                app:icon="@drawable/ic_arrow_forward"
+                app:iconTint="#FFFFFF"
+                app:iconGravity="end" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
@@ -115,8 +145,9 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="8dp"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="8dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="12dp"
         app:layout_constraintBottom_toTopOf="@+id/documentCard"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -126,30 +157,41 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/chat_card_bg"
             android:padding="16dp">
 
-            <ImageView
-                android:id="@+id/chatIcon"
+            <!-- Thay đổi cách hiển thị icon - dùng FrameLayout để tách nền và icon -->
+            <FrameLayout
+                android:id="@+id/chatIconContainer"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
-                android:src="@android:drawable/ic_dialog_email"
+                android:background="@drawable/icon_circle_bg_blue"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/purple_500" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/chatIcon"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_chat"
+                    app:tint="#FFFFFF" />
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/chatTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="LaTeX Assistant"
-                android:textColor="#000000"
+                android:text="Trợ Lý EduVision AI"
+                android:textColor="#03A9F4"
                 android:textSize="20sp"
                 android:textStyle="bold"
+                android:fontFamily="sans-serif-medium"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/chatIcon" />
+                app:layout_constraintTop_toBottomOf="@+id/chatIconContainer" />
 
             <TextView
                 android:id="@+id/chatDescription"
@@ -157,25 +199,32 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
-                android:text="Get help with LaTeX from our AI assistant. Ask questions, troubleshoot issues, and get guidance."
-                android:textColor="#555555"
+                android:text="Nhận trợ giúp về LaTeX từ trợ lý AI của chúng tôi. Đặt câu hỏi, khắc phục sự cố và nhận hướng dẫn."
+                android:textColor="#616161"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/chatTitle" />
 
-            <Button
+            <!-- Sửa nút để không bị che lấp chữ -->
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/openChatButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:backgroundTint="@color/purple_500"
-                android:text="Chat with Assistant"
+                style="@style/Widget.MaterialComponents.Button"
+                android:backgroundTint="#03A9F4"
+                android:text="Chat Với Trợ Lý"
+                android:textColor="#FFFFFF"
+                app:cornerRadius="24dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/chatDescription"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.0"
+                app:icon="@drawable/ic_arrow_forward"
+                app:iconTint="#FFFFFF"
+                app:iconGravity="end" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
@@ -187,8 +236,9 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="8dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -198,30 +248,41 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/document_card_bg"
             android:padding="16dp">
 
-            <ImageView
-                android:id="@+id/documentIcon"
+            <!-- Thay đổi cách hiển thị icon - dùng FrameLayout để tách nền và icon -->
+            <FrameLayout
+                android:id="@+id/documentIconContainer"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
-                android:src="@android:drawable/ic_menu_edit"
+                android:background="@drawable/icon_circle_bg_green"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/purple_500" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/documentIcon"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_document"
+                    app:tint="#FFFFFF" />
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/documentTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="LaTeX Document Writer"
-                android:textColor="#000000"
+                android:text="Soạn Thảo Tài Liệu LaTeX"
+                android:textColor="#4CAF50"
                 android:textSize="20sp"
                 android:textStyle="bold"
+                android:fontFamily="sans-serif-medium"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/documentIcon" />
+                app:layout_constraintTop_toBottomOf="@+id/documentIconContainer" />
 
             <TextView
                 android:id="@+id/documentDescription"
@@ -229,28 +290,33 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
-                android:text="Create and edit documents with built-in LaTeX formula support. Organize your math notes easily."
-                android:textColor="#555555"
+                android:text="Tạo và chỉnh sửa tài liệu với hỗ trợ công thức LaTeX tích hợp. Tổ chức ghi chú toán học dễ dàng."
+                android:textColor="#616161"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/documentTitle" />
 
-            <Button
+            <!-- Sửa nút để không bị che lấp chữ -->
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/openDocumentButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:backgroundTint="@color/purple_500"
-                android:text="Open Documents"
+                style="@style/Widget.MaterialComponents.Button"
+                android:backgroundTint="#4CAF50"
+                android:text="Mở Tài Liệu"
+                android:textColor="#FFFFFF"
+                app:cornerRadius="24dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/documentDescription"
-                app:layout_constraintVertical_bias="0.0" />
-
+                app:layout_constraintVertical_bias="0.0"
+                app:icon="@drawable/ic_arrow_forward"
+                app:iconTint="#FFFFFF"
+                app:iconGravity="end" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.cardview.widget.CardView>
 
-</androidx.constraintlayout.widget.ConstraintLayout> 
+</androidx.constraintlayout.widget.ConstraintLayout>
