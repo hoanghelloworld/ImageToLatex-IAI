@@ -1,7 +1,7 @@
-# ImageToLatex-IAI
+# EduVision-IAI
 
 ## Introduction
-ImageToLatex-IAI is an Android application that converts mathematical formulas from images into LaTeX code. The project combines computer vision and machine learning to accurately recognize both handwritten and printed mathematical expressions, making it easier for students, educators, and researchers to digitize mathematical content.
+EduVision-IAI is an Android application that converts mathematical formulas from images into LaTeX code. The project combines computer vision and machine learning to accurately recognize both handwritten and printed mathematical expressions, making it easier for students, educators, and researchers to digitize mathematical content.
 
 ### Key Features
 - Convert images of mathematical formulas to LaTeX code
@@ -77,7 +77,7 @@ ImageToLatex-IAI is an Android application that converts mathematical formulas f
 
 MIT License
 
-Copyright (c) 2024 ImageToLatex-IAI
+Copyright (c) 2024 EduVision-IAI
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
